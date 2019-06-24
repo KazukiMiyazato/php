@@ -6,7 +6,7 @@ steps:
     args:
       - "-c"
       - |
-        [[ "$BRANCH_NAME" == "master" ]] \
+        [[ "$BRANCH_NAME" == "develop" ]] \
         && \
         gcloud build \
         --pull \
