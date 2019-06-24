@@ -8,7 +8,7 @@ steps:
       - |
         [[ "$BRANCH_NAME" == "master" ]] \
         && \
-        docker build \
+        gcloud build \
         --pull \
         --build-arg \
         "ENV=gke" \
