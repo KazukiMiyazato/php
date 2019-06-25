@@ -11,6 +11,7 @@ steps:
           echo 'Processing was skipped because the branch is not '"$$_TARGET_BRANCH"'. Although "ERROR" is output, there is no problem.'; \
           exit 1; \
         fi
+    dir: "5.6/alpine3.8/apache-cli"
 
   - name: "gcr.io/cloud-builders/docker"
     id: "build-php56"
@@ -24,8 +25,7 @@ steps:
         --build-arg ENV=gke \
         -t "gcr.io/$PROJECT_ID/$REPO_NAME/php:$COMMIT_SHA" \
         -t "gcr.io/$PROJECT_ID/$REPO_NAME/php:latest" \
-        -f "Dockerfile" \
-        .
+        -f "Dockerfile" .
     dir: "5.6/alpine3.8/apache-cli"
 
 images:
