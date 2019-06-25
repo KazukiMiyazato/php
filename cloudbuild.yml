@@ -6,7 +6,7 @@ steps:
       - "-c"
       - |
         if [[ "$BRANCH_NAME" == "$_TARGET_BRANCH" ]]; then \
-          true \
+          true; \
         else \
           echo 'Processing was skipped because the branch is not $_TARGET_BRANCH. Although "ERROR" is output, there is no problem.'; \
           exit 1; \
@@ -15,6 +15,8 @@ steps:
 
   - name: "gcr.io/cloud-builders/docker"
     id: "build-php56"
+    waitFor:
+      - "filter-branch"
     entrypoint: "bash"
     args:
       - "-c"
