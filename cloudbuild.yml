@@ -2,6 +2,15 @@ steps:
   - name: "gcr.io/cloud-builders/docker"
     id: "filter-branch"
     entrypoint: "bash"
+    args:
+      - "-c"
+      - |
+        if [[ "$BRANCH_NAME" == "$_TARGET_BRANCH" ]]; then \
+          true \
+        else \
+          echo 'Processing was skipped because the branch is not $_TARGET_BRANCH. Although "ERROR" is output, there is no problem.'; \
+          exit 1; \
+        fi
     dir: "5.6/alpine3.8/apache-cli"
 
   - name: "gcr.io/cloud-builders/docker"
