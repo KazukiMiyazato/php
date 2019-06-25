@@ -1,16 +1,14 @@
 steps:
   - name: "gcr.io/cloud-builders/docker"
     id: "filter-branch"
-    env:
-      - 'TARGET_BRANCH=master'
     entrypoint: "bash"
     args:
       - "-c"
       - |
-        if [[ "$BRANCH_NAME" == "$$TARGET_BRANCH" ]]; then \
+        if [[ "$BRANCH_NAME" == "$$_TARGET_BRANCH" ]]; then \
           true \
         else \
-          echo 'Processing was skipped because the branch is not '"$$TARGET_BRANCH"'. Although "ERROR" is output, there is no problem.'; \
+          echo 'Processing was skipped because the branch is not '"$$_TARGET_BRANCH"'. Although "ERROR" is output, there is no problem.'; \
           exit 1; \
         fi
 
@@ -33,3 +31,6 @@ steps:
 images:
   - "gcr.io/$PROJECT_ID/$REPO_NAME/php:$COMMIT_SHA"
   - "gcr.io/$PROJECT_ID/$REPO_NAME/php:latest"
+
+substitutions:
+  _TARGET_BRANCH: master
