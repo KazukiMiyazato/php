@@ -6,18 +6,18 @@ steps:
     args:
       - "-c"
       - |
-        [[ "$BRANCH_NAME" == "develop" ]] \
-        && \
-        docker build \
-        --pull \
-        --build-arg ENV=gke \
-        -t "gcr.io/$PROJECT_ID/$REPO_NAME/php:$COMMIT_SHA" \
-        -t "gcr.io/$PROJECT_ID/$REPO_NAME/php:latest" \
-        -f "Dockerfile" \
-        . \
-        || \
-        echo 'Processing was skipped because the branch is not master. Although "ERROR" is output, there is no problem.' \
-        && true
+        if [[ "$BRANCH_NAME" == "master" ]]; then \
+          docker build \
+          --pull \
+          --build-arg ENV=gke \
+          -t "gcr.io/$PROJECT_ID/$REPO_NAME/php:$COMMIT_SHA" \
+          -t "gcr.io/$PROJECT_ID/$REPO_NAME/php:latest" \
+          -f "Dockerfile" \
+          .; \
+        else \
+          echo 'Processing was skipped because the branch is not master. Although "ERROR" is output, there is no problem.'; \
+          exit 1; \
+        fi
     dir: "5.6/alpine3.8/apache-cli"
 
 images:
